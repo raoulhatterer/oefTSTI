@@ -1,0 +1,199 @@
+\title{Activité I1- Comment fonctionne une cellule photovoltaïque ? Thème 1 : l’habitat }
+\language{fr}
+\author{Raoul,Hatterer}
+\email{hatterer.med@laposte.net}
+\format{html}
+\precision{1000}
+\computeanswer{no}
+
+<!-- STYLE CSS -->
+\css{
+<style type="text/css">
+  h1{
+  background-color: white;
+  color: #2584AB; margin: 1% 1%; padding : 1%;}
+  .enonce{
+  background-color: #E7F7FF;
+  color: black; margin: 1% 1%; padding : 1%;}
+  .questions{
+  background-color: #CCF0FF;
+  color: black; margin: 1% 1%; padding : 1%;}
+  .question{
+  color:green;}
+  .solution{ background-color: #D6E4C1;
+  color : green  ;margin: 0; padding : 1% 5% 5% 5%;}
+  .definition{ background-color: #FFBF7F;
+  color : black  ;margin: 0 10% 0 10%; padding : 1% 1% 1% 1%;}
+  h1.solution{ background-color: #C5E0A2;
+  color: green; margin: 5% 0 1% -5pt; padding : 1%;}
+</style>
+}
+
+
+<!-- VARIABLES -->
+\comment{Le réseau de caractéristique en comporte 4. On en tire une au sort parmi les quatre.}
+\integer{caracteristique=randint(1..4)}
+\comment{l'éclairements énergétiques (exprimés en W/m2)}
+\comment{eclairements:400,600,800,1000}
+\integer{eclairement=\caracteristique*200+200}
+\comment{Ne pas confondre l'éclairement énergétique avec l'éclairement lumineux qui lui est exprimé en lux.}
+\comment{Coordonnées de la Tension à vide}
+\matrix{xU0=492,500,506,512}
+\integer{yU0=446}
+\comment{Coordonnées du Courant de court-circuit}
+\integer{xIcc=100}
+\matrix{yIcc=290,245,189,121}
+\comment{Point de fonctionnement nominal}
+\matrix{xPn=422,430,429,439}
+\matrix{yPn=304,267,216,162}
+\comment{Puissances maximales}
+\matrix{Puissances=142.1,180.67,228.9,290}
+\real{Pmax=\Puissances[\caracteristique]}
+
+\comment{Calcul aléatoire de la dimension en cm du panneau pour avoir un rendement plausible}
+\integer{rendement1=randint(5..15)}
+\real{Precue1=\Pmax/\rendement1*100}
+\real{Surface1=\Precue1/\eclairement}
+\integer{Longueur=sqrt(\Surface1)*1.2*100}
+\integer{Largeur=sqrt(\Surface1)/1.2*100}
+\real{Surface=\Longueur/100*\Largeur/100}
+\real{Precue=\eclairement*\Surface}
+\integer{rendement=\Pmax/\Precue*100}
+\comment{L'arrondi d'un reel en entier se fait automatiquement vers l'entier le plus proche
+}
+
+
+\steps{reply1, reply2,reply3,reply4,reply5,reply6
+reply7
+reply8
+reply9
+reply10,reply11,reply12,reply13
+reply14,reply15}
+\comment{Mécanisme des exercices à étapes: Steps comporte autant de lignes qu'il y a d'étapes. step=1 pour la première ligne, step=2 pour la 2e, etc}
+\comment{À chaque étape on attend une ou plusieurs réponses.}
+
+
+<!-- ÉNONCÉ -->
+\statement{
+
+
+\if{\step=1}{
+<h1>Contexte : </h1>
+<div class="enonce">
+  À la faveur du développement durable, depuis quelques années on peut apercevoir des panneaux solaires photovoltaïques sur les toits des maisons. Un panneau solaire photovoltaïque est en fait une association (en série) de cellules photovoltaïques. Chaque cellule est constituée de semi-conducteurs. Lorsqu’elle est éclairée par de la lumière, la cellule génère un courant électrique continu. Une tension continue apparaît également entre ses bornes.</div>
+<center>
+  <img src="\imagedir/photovoltaique1.jpg"  alt="toit recouvert de panneaux photovoltaïques"/>
+</center>
+
+<h1>Problème à résoudre : Comment fonctionne une cellule photovoltaïque et quel est son bilan énergétique ? </h1>
+
+<h2>S’approprier le problème</h2>
+<div class="questions">
+  <ol>
+    <li>Quelle conversion énergétique est effectuée par la cellule photovoltaïque ? </li> <br/>
+    La cellule photovoltaïque est un convertisseur d'énergie : elle convertit une \embed{reply1} en \embed{reply2}. <br/>
+    <li>Si l’on souhaite raccorder le panneau solaire au réseau électrique domestique, quelle opération  est absolument nécessaire ? </li> <br/>
+    Le réseau électrique domestique est un réseau \embed{reply3}. Le panneau solaire fournit une \embed{reply4}. <br/>
+    Le raccord de panneaux solaires photovoltaïques au réseau électrique nécessite un \embed{reply5,7} qui est un convertisseur \embed{reply6}.
+  </ol>
+</div>
+
+<h2>Mettre en œuvre une cellule photovoltaïque</h2>
+<div class="questions">
+  On souhaite tracer la caractéristique électrique I=f(U) d'une cellule photovoltaïque identique à celles contenues dans les panneaux solaires. Pour cela on effectue le montage suivant en respectant les précautions d'usage.
+  <center>
+    <img src="\imagedir/photovoltaique2.jpg"  width="640" alt="montage"/>
+  </center>
+
+  <h3>Précautions d’usage : </h3>
+
+  <ul>
+    <li> La source de lumière doit-être immobile pendant toute la manipulation et située à une dizaine de cm de la cellule. </li>
+    <li> La cellule doit être éclairée de manière la plus homogène possible sous un éclairage si possible perpendiculaire. </li>
+    <li> Calibre du voltmètre : 2V DC </li>
+    <li> Calibre de l'ampèremètre : 200 mA DC </li>
+  </ul>
+  <h3>Mode opératoire : </h3>
+  <ul>
+    <li>Mesurer avec le luxmètre la valeur de l'éclairement lumineux E (correspondant à la sensation humaine), donnée en lux (lx), à l'emplacement du panneau photovoltaïque (faire si nécessaire plusieurs mesures en différents points du panneau). </li>
+    <li>Ouvrir le logiciel « Atelier scientifique » et définir les deux grandeurs I (en A) et U (en V) dans le tableur. </li>
+    <li>Pour des valeurs de R variant de 1k Ω (=1000Ω) à 1 Ω , relever les valeurs de I (A) et U (V) (prendre une vingtaine de mesures ) ; vous écrirez les valeurs directement sur le logiciel « Atelier scientifique » . </li>
+    <li>Tracer la caractéristique I = f(U) ; I en ordonnée et U en abcisse. Appeler l'enseignant.</li>
+    <li>À l’aide du logiciel, créer la grandeur puissance électrique Pelec = U × I avec U en volts et I en ampères 
+      puis, sur le même graphe que précédemment, tracer la caractéristique Pelec = g(U). Appeler l'enseignant et après accord, imprimer le graphe avec les deux caractéristiques. </li>
+  </ul>
+</div>
+}
+
+\if{\step>1}{
+<h2>Exploitation des résultats </h2>
+
+Si l'on reproduit le mode opératoire précédent pour différentes valeurs d'éclairement on obtient un réseau de caractéristiques.
+
+
+<div class="questions">
+  <ol>
+    <li>Sur chaque caractéristique I=f(U), on distingue trois points particuliers: 
+      <ul>
+	<li>la tension à vide U<sub>0</sub> (valeur de U lorsque l’intensité est nulle) 
+	  \if{\step=2}{ <br/> \embed{r7} <br/>  <span class="question">Question :   Pour un éclairement de \eclairement W/m<sup>2</sup> cliquer sur la tension à vide </span> <br/><br/> }
+	</li>
+	<li>l’intensité du courant de court-circuit Icc (valeur de I lorsque la tension est nulle) 
+	  \if{\step=3}{ <br/> \embed{r8}<br/>  <span class="question">Question :   Pour un éclairement de \eclairement W/m<sup>2</sup> cliquer sur le courant de court-circuit </span> <br/><br/>}
+	</li>
+	<li>le point de fonctionnement nominal (valeurs de I, U) du panneau photovoltaïque, point permettant d’obtenir la puissance électrique maximale. 
+	  \if{\step=4}{ <br/> \embed{r9}<br/>  <span class="question">Question :   Pour un éclairement de \eclairement W/m<sup>2</sup> cliquer sur le point de fonctionnement nominal </span> <br/><br/>}
+	</li>
+      </ul>
+    </li>
+    <li>Dans quelle partie de la caractéristique, le panneau photovoltaïque se comporte-t-il comme un générateur de courant ? comme un générateur de tension ? \if{\step=5}{<br/><img src="\imagedir/photovoltaique3.gif"  alt="réseau de caractéristiques"/> <br/>     Le panneau photovoltaïque se comporte comme un générateur de courant dans la partie \embed{reply10} de la caractéristique où \embed{reply11} est proche de son maximum et varie très peu. Il se comporte comme un générateur de tension dans la partie \embed{reply12} où \embed{reply13} est proche de son maximum.}    </li>
+    <li>Le rendement η est le rapport de la puissance produite sur la puissance reçue lorsque le panneau photovoltaïque délivre sa puissance électrique maximale : 𝜂 = Pmax / Precue où       Preçue est la puissance reçue par rayonnement. Cette puissance se calcule ainsi : Preçue = E&middot;S où E est l’éclairement énergétique en W&middot;m<sup>-2</sup> et S la surface éclairée en m<sup>2</sup>.  <br/>Après avoir déterminé la surface S de la cellule, déterminer un ordre de grandeur du rendement de la cellule photovoltaïque. <br/><br/>On donne les dimensions du panneau : \Longueur cm &times; \Largeur cm.
+      \if{\step=6}{
+      <br/>
+      Compte tenu de la surface du panneau:
+      <ul>
+	<li>la puissance reçue par le panneau est de \embed{reply14,8} </li>
+	<li>son rendement est de \embed{reply15,3}% .</li>
+      </ul>}
+  </ol>
+  </li>
+</div>
+
+}
+}
+
+\comment{step=1 attend ces 6 réponses}
+\answer{énergie absorbée par la cellule PV}{1; énergie rayonnante, énergie thermique, énergie électrique continue, énergie électrique alternative, énergie voltaïque }{type=menu}{option=shuffle}
+\answer{énergie utile fournie par la cellule PV}{3; énergie rayonnante, énergie thermique, énergie électrique continue, énergie électrique alternative, énergie voltaïque }{type=menu}{option=shuffle}
+\answer{réseau}{1; alternatif, continu}{type=menu}{option=shuffle}
+\answer{PV fournit}{2; une tension alternative, une tension continue}{type=menu}{option=shuffle}
+\answer{onduleur}{onduleur}{type=nocase}
+\answer{convertisseur}{1;continu/alternatif,alternatif/continu}{type=menu}{option=shuffle}
+
+\comment{reply7}
+\answer{Tension à vide}{\imagedir/photovoltaique3.gif;circle ,\xU0[\caracteristique],\yU0,8}{type=coord}
+\comment{reply8}
+\answer{Courant de court-circuit}{\imagedir/photovoltaique3.gif;circle ,\xIcc,\yIcc[\caracteristique],15}{type=coord}
+\comment{reply9}
+\answer{Fonctionnement nominal}{\imagedir/photovoltaique3.gif;circle ,\xPn[\caracteristique],\yPn[\caracteristique],20}{type=coord}
+\comment{reply10}
+\answer{Générateur de courant}{1;pratiquement horizontale, pratiquement verticale, coudée}{type=menu}{option=shuffle}
+\comment{reply11}
+\answer{Justification générateur de courant}{1;l'intensité du courant, la tension, la puissance}{type=menu}{option=shuffle}
+\comment{reply12}
+\answer{Générateur de tension}{2;pratiquement horizontale, pratiquement verticale, coudée}{type=menu}{option=shuffle}
+\comment{reply13}
+\answer{Justification générateur de tension}{2;l'intensité du courant, la tension, la puissance}{type=menu}{option=shuffle}
+\comment{reply14}
+\answer{Puissance recue}{\Precue W}{type=units}
+\comment{reply15}
+\answer{Rendement}{\rendement }{type=units}
+
+
+\hint{Un générateur de courant maintient un courant d'intensité quasi constante dans un circuit. Un générateur de tension maintient une tension quasi constante.}
+
+\help{
+<center>
+  <img src="\imagedir/photovoltaique4.pdf"  alt="Chap 1 :  l’essentiel"/>
+</center>
+  }

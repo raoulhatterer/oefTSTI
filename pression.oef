@@ -1,0 +1,578 @@
+\title{Activité II2 : Distribution d’eau sanitaire }
+\language{fr}
+\author{Raoul,Hatterer}
+\email{hatterer.med@laposte.net}
+\format{html}
+\precision{1000}
+\computeanswer{no}
+
+<!-- STYLE CSS -->
+\css{
+<style type="text/css">
+  h1{
+  background-color: white;
+  color: #2584AB; margin: 1% 1%; padding : 1%;}
+  h2{
+  font-size: 120%;
+  text-decoration: underline;
+  }
+  .enonce{
+  background-color: #E7F7FF;
+  color: black; margin: 1% 1%; padding : 1%;}
+  .questions{
+  background-color: #CCF0FF;
+  color: black; margin: 1% 1%; padding : 1%;}
+  .question{
+  color:green;}
+  .solution{ background-color: #D6E4C1;
+  color : green  ;margin: 0; padding : 1% 5% 5% 5%;}
+  .definition{ background-color: #FFBF7F;
+  color : black  ;margin: 0 10% 0 10%; padding : 1% 1% 1% 1%;}
+  h1.solution{ background-color: #C5E0A2;
+  color: green; margin: 5% 0 1% -5pt; padding : 1%;}
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; background-color:white; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left;  background-color:#EEEEEE;}
+  .org-center { margin-left: auto; margin-right: auto; text-align: center;  background-color:white; }
+  table {
+  border: medium solid #000000;
+  width: 50%;
+  }
+  td {
+  border: thin solid ;
+  padding: 5px;
+  text-align: center;
+  }
+</style>
+}
+
+
+<!-- VARIABLES -->
+\integer{rho_eau=randint(950..1050)}
+\integer{Patm=randint(990..1020)}
+\integer{PatmPa=\Patm*100}
+\integer{P00Pa=\PatmPa+\rho_eau*9.81*0.000}
+\integer{P05Pa=\PatmPa+\rho_eau*9.81*0.050}
+\integer{P10Pa=\PatmPa+\rho_eau*9.81*0.100}
+\integer{P15Pa=\PatmPa+\rho_eau*9.81*0.150}
+\integer{P20Pa=\PatmPa+\rho_eau*9.81*0.200}
+
+\integer{P00=\P00Pa/100}
+\integer{P05=\P05Pa/100}
+\integer{P10=\P10Pa/100}
+\integer{P15=\P15Pa/100}
+\integer{P20=\P20Pa/100}
+
+\real{coef_dir= (\P20-\P00)/0.2}
+\integer{rho_exp=\coef_dir*100/9.81}
+\real{erreur=abs(\rho_eau -\rho_exp)/\rho_eau*100}
+\text{erreur=slib(text/sigunits \erreur , 2)}
+
+
+\real{hauteur_etage=randitem(2.80,2.90,3.00,3.10,3.20)}
+\text{print_hauteur_etage=wims(replace internal . by , in \hauteur_etage)}
+\integer{delta_pression= \rho_eau*9.81*\hauteur_etage*1e-3}
+\real{delta_pression=\delta_pression/100}
+\real{\p_amont_raw=6}
+\text{p_amont=slib(text/sigunits \p_amont_raw bar, 3,bar)}
+\text{print_p_amont=wims(replace internal . by , in \p_amont)s}
+\real{p_amont1_raw=\p_amont_raw-1*\delta_pression}
+\text{p_amont1=slib(text/sigunits \p_amont1_raw bar, 3, bar)}
+\real{p_amont2_raw=\p_amont_raw-2*\delta_pression}
+\text{p_amont2=slib(text/sigunits \p_amont2_raw bar, 3, bar)}
+\real{p_amont3_raw=\p_amont_raw-3*\delta_pression}
+\text{p_amont3=slib(text/sigunits \p_amont3_raw bar, 3, bar)}
+\real{p_amont4_raw=\p_amont_raw-4*\delta_pression}
+\text{p_amont4=slib(text/sigunits \p_amont4_raw bar, 3, bar)}
+\real{p_amont5_raw=\p_amont_raw-5*\delta_pression}
+\text{p_amont5=slib(text/sigunits \p_amont5_raw bar, 3, bar)}
+\real{p_amont6_raw=\p_amont_raw-6*\delta_pression}
+\text{p_amont6=slib(text/sigunits \p_amont6_raw bar, 3, bar)}
+
+\real{p6_raw=3}
+\text{p6=slib(text/sigunits \p6_raw bar, 3, bar)}
+\real{p5_raw=\p6_raw+\delta_pression}
+\text{p5=slib(text/sigunits \p5_raw bar, 3, bar)}
+\real{p4_raw=\p6_raw+2*\delta_pression}
+\text{p4=slib(text/sigunits \p4_raw bar, 3, bar)}
+\real{p3_raw=\p6_raw+3*\delta_pression}
+\text{p3=slib(text/sigunits \p3_raw bar, 3, bar)}
+\real{p2_raw=\p6_raw+4*\delta_pression}
+\text{p2=slib(text/sigunits \p2_raw bar, 3, bar)}
+\real{p1_raw=\p6_raw+5*\delta_pression}
+\text{p1=slib(text/sigunits \p1_raw bar, 3, bar)}
+\real{pRDC2_raw=\p6_raw+6*\delta_pression}
+\text{pRDC2=slib(text/sigunits \pRDC2_raw bar, 3, bar)}
+\integer{etage=randint(2..6)}
+\real{p_insuffisante_raw=3-\etage*\delta_pression}
+\text{p_insuffisante=slib(text/sigunits \p_insuffisante_raw bar, 3, bar)}
+
+
+
+\text{tableaujuste=  
+<table>
+  <tr>
+    <td>h [m]</td>
+    <td>0.000</td>
+    <td>0.050</td>
+    <td>0.100</td>
+    <td>0.150</td>
+    <td>0.200</td>
+  </tr>
+  <tr>
+    <td>P<sub>abs</sub> [hPa]</td>
+    <td>\Patm</td>
+    <td>\P05</td>
+    <td>\P10</td>
+    <td>\P15</td>
+    <td>\P20</td>
+  </tr>
+</table>
+}
+
+
+\text{tableaufaux1=  
+<table>
+  <tr>
+    <td>h [cm]</td>
+    <td>0.0</td>
+    <td>5.0</td>
+    <td>10.0</td>
+    <td>15.0</td>
+    <td>20.0</td>
+  </tr>
+  <tr>
+    <td>P<sub>abs</sub> [hPa]</td>
+    <td>\Patm</td>
+    <td>\P05</td>
+    <td>\P10</td>
+    <td>\P15</td>
+    <td>\P20</td>
+  </tr>
+</table>
+}
+
+\text{tableaufaux2=  
+<table>
+  <tr>
+    <td>h [m]</td>
+    <td>0.000</td>
+    <td>0.050</td>
+    <td>0.100</td>
+    <td>0.150</td>
+    <td>0.200</td>
+  </tr>
+  <tr>
+    <td>P<sub>abs</sub> [Pa]</td>
+    <td>\PatmPa</td>
+    <td>\P05Pa</td>
+    <td>\P10Pa</td>
+    <td>\P15Pa</td>
+    <td>\P20Pa</td>
+  </tr>
+</table>
+}
+
+\text{tableaufaux3=  
+<table>
+  <tr>
+    <td>h [m]</td>
+    <td>0.000</td>
+    <td>0.050</td>
+    <td>0.100</td>
+    <td>0.150</td>
+    <td>0.200</td>
+  </tr>
+  <tr>
+    <td>P<sub>abs</sub> [hPa]</td>
+    <td>\PatmPa</td>
+    <td>\P05Pa</td>
+    <td>\P10Pa</td>
+    <td>\P15Pa</td>
+    <td>\P20Pa</td>
+  </tr>
+</table>
+}
+
+\text{tableaufaux4=  
+<table>
+  <tr>
+    <td>h [m]</td>
+    <td>0.0</td>
+    <td>5.0</td>
+    <td>10.0</td>
+    <td>15.0</td>
+    <td>20.0</td>
+  </tr>
+  <tr>
+    <td>P<sub>abs</sub> [hPa]</td>
+    <td>\Patm</td>
+    <td>\P05</td>
+    <td>\P10</td>
+    <td>\P15</td>
+    <td>\P20</td>
+  </tr>
+</table>
+}
+
+<!-- ÉTAPES -->
+
+\steps{reply1,reply2,reply3,reply4,reply5,reply6,reply7,reply37
+reply8,reply9,reply10,reply11,reply12,reply13,reply14,reply15,reply16,reply17,reply18,reply19,reply20,reply21,reply22,reply23,reply24,reply25,reply26,reply27,reply28,reply29,reply30,reply31,reply32,reply33,reply34,reply35,reply36
+}
+
+
+
+
+<!-- ÉNONCÉ -->
+\statement{
+
+
+<h1>Contexte</h1>
+<div class="enonce">
+  Réunis en conseil syndical pour voter un projet de rénovation du circuit d’eau potable dans un immeuble, les propriétaires des appartements s’interrogent sur la nécessité d’installer des réducteurs de pression pour leur projet. 
+</div>
+
+<h1>Documents</h1>
+<div class="enonce">
+  <h2>Document 1 </h2>
+  <p>
+    Pour garantir le confort de distribution de l’eau potable, l’installation sanitaire à l’intérieur du bâtiment doit tenir compte des exigences de pression, de débit et de température demandées. <br/>
+    Ainsi, pour qu’un robinet soit fonctionnel il doit délivrer un débit minimal, ce qui implique d’avoir en amont du robinet une pression minimale qui dépend du point de puisage.
+  </p>
+  
+  <center>
+    <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+      <colgroup>
+	<col  class="org-left" />
+
+	<col  class="org-right" />
+
+	<col  class="org-right" />
+
+	<col  class="org-right" />
+
+	<col  class="org-right" />
+      </colgroup>
+      <thead>
+	<tr>
+	  <th scope="col" class="org-left">Point de puisage</th>
+	  <th scope="col" class="org-right">Débit d'eau froide [L/s]</th>
+	  <th scope="col" class="org-right">Débit d'eau chaude [L/s]</th>
+	  <th scope="col" class="org-right">Température [°C]</th>
+	  <th scope="col" class="org-right">Pression minimale [bar]</th>
+	</tr>
+      </thead>
+      <tbody>
+	<tr>
+	  <td class="org-left">Lavabo, lave-main, bidet</td>
+	  <td class="org-right">0.04</td>
+	  <td class="org-right">0.06</td>
+	  <td class="org-right">40</td>
+	  <td class="org-right">0.5</td>
+	</tr>
+
+	<tr>
+	  <td class="org-left">Robinet de chasse</td>
+	  <td class="org-right">0.1</td>
+	  <td class="org-right">/</td>
+	  <td class="org-right">EF</td>
+	  <td class="org-right">0.5</td>
+	</tr>
+
+	<tr>
+	  <td class="org-left">Evier</td>
+	  <td class="org-right">0.02</td>
+	  <td class="org-right">0.18</td>
+	  <td class="org-right">55</td>
+	  <td class="org-right">1</td>
+	</tr>
+
+	<tr>
+	  <td class="org-left">Douche</td>
+	  <td class="org-right">0.08</td>
+	  <td class="org-right">0.12</td>
+	  <td class="org-right">40</td>
+	  <td class="org-right">1</td>
+	</tr>
+
+	<tr>
+	  <td class="org-left">Lave-linge, lave-vaisselle</td>
+	  <td class="org-right">0.2</td>
+	  <td class="org-right">/</td>
+	  <td class="org-right">EF</td>
+	  <td class="org-right">1</td>
+	</tr>
+
+	<tr>
+	  <td class="org-left">Baignoire</td>
+	  <td class="org-right">0.16</td>
+	  <td class="org-right">0.24</td>
+	  <td class="org-right">40</td>
+	  <td class="org-right">1</td>
+	</tr>
+      </tbody>
+    </table>
+  </center>
+</div>
+
+
+<div class="enonce">
+  <h2>Document 2 : pression relative et pression absolue </h2>
+  Un pressiomètre est un capteur de pression qui mesure une pression absolue \(P_{abs}\) en hectopascal (hPa). <br/>
+  <mark>  La pression absolue est la pression mesurée par rapport au vide absolu (c’est à dire l’absence totale de matière). Elle est toujours positive. </mark> <br/>
+  <mark>  La pression relative \(P_{rel}\) se définit par rapport à la pression atmosphérique existant au moment de la mesure. </mark>
+  <h4>  La relation qui lit les deux pressions est : </h4>
+  <center>
+    \(P_{abs} = P_{rel} + P_{atm} \)
+  </center>
+  On rappelle que 1,0bar = 1000hPa 
+</div>
+
+<div class="enonce">
+  <h2>Document 3 : problème </h2>
+  Dans un immeuble, on considère une hauteur de  \print_hauteur_etage m pour chaque étage à partir du rez de chaussée RDC.  <br/>
+  Deux solutions ont été retenues par le conseil syndical (voir page suivante) : soit la pose de plusieurs réducteurs de pression à chaque étage (cas de figure 1), soit la pose d’un seul au RDC (cas de figure 2). 
+
+  <center>
+    <img src="\imagedir/pression_immeuble.jpg"  width="600" alt="immeuble de 6 étages (2 cas de figure)"/>
+  </center>
+  
+  <h4>Réducteurs de pression : </h4>
+  Comme son nom l'indique, le réducteur de pression permet de diminuer la pression de l'eau qui arrive dans le réseau d’eau. Il protège toute l’installation des problèmes dus à un excès de pression : bruits dans les canalisations, coups de bélier, éclaboussures, usures prématurées des appareils électroménagers et des robinetteries. Une pression de 3 bars est recommandée. <br/>
+  Il existe des modèles (qui permettent de régler la pression souhaitée en sortie en tournant un robinet) dans lesquels une membrane intérieure commande un clapet, régulant ainsi le débit de l'eau et modifiant la pression. On peut leur ajouter un manomètre permettant de contrôler aisément que la pression souhaitée soit atteinte.
+
+  <center>
+    <img src="\imagedir/pression_reducteur.jpg"  width="480" alt="réducteur de pression"/>
+  </center>
+
+  Dans le cas de leur immeuble d’habitation de 6 étages, la pression du réseau d’eau délivrée est de \print_p_amont et la pression souhaitée dans chaque appartement est de 3 bars pour répondre aux exigences du document 1. Il apparait donc nécessaire de poser un ou plusieurs réducteurs de pression dans l’immeuble.
+
+</div>
+
+<div class="enonce">
+  <h2>Document 4 : Matériel à votre disposition : </h2>
+  <ul>
+    <li>  Une colonne remplie d’eau (éprouvette graduée de 500,0 mL) : le lycée ne possède pas un tuyau aussi long que 6 étages que l'on pourrait remplir d’eau !!! </li>
+    <li>  Une règle graduée. </li>
+    <li>  Un tube en verre reliée à un capteur de pression absolue P<sub>abs</sub>.</li>
+  </ul>
+
+  <p>
+    Grâce à ce dispositif vous pouvez mesurer la pression en n’importe quel point de la colonne d’eau. 
+  </p>
+
+  <center>
+    <img src="\imagedir/pression_eprouvette.jpg"  width="240" alt="réducteur de pression"/>
+  </center>
+  
+  Notons :
+  <ul>
+    <li> \(A\)  un point qui sera pris à la surface de l’eau. On aura donc \(P_A=P_{atm}\) 
+      <li>  \(z\)  l’altitude d’un point par exemple par rapport au sol. </li>
+      <li>  \(h\) la profondeur d’un point par exemple par rapport à la surface de l’eau.  <br/>
+	Donc :
+	<ul>
+	  <li>\(h_A=0\) </li>
+	  <li>\(h_B= z_A - z_B\) = profondeur du point B par rapport à la surface du liquide au point A</li>
+	</ul>
+      </li>
+  </ul>
+
+  
+</div>
+
+<h1>Travail à effectuer </h1>
+<div class="enonce">
+   Vous devez aider le conseil syndical à faire le bon choix :
+
+  <ul>
+    <li>Les étages seront-ils tous correctement desservis en pression dans les 2 cas de figure du document 3 ? </li>
+    <li>Déterminer la solution que le conseil syndical devrait retenir en justifiant votre choix. </li>
+  </ul>
+   
+</div>
+
+<h1>Contraintes </h1>
+<div class="enonce">
+  Votre compte rendu présentera les points suivants et s’appuiera en partie sur des expériences réalisées en TP. 
+</div>
+
+<div class="questions">
+  \if{\step=1}{
+  <ul>
+    <li>Comment varie la pression absolue de l’eau en fonction de la hauteur \(h\) dans la colonne d’eau ? L’origine \(h = 0\, m\) sera définie comme étant la surface libre de la colonne d’eau. <br/>
+      D'après les mesures faites en TP, on peut dire que la pression \embed{reply1} mesurée par le pressiomètre \embed{reply2} avec la profondeur d'immersion.
+    </li>
+    <li>Mesurer différentes ( au moins 5 valeurs) pressions absolues \(P_{abs}\) en hPa pour différentes hauteurs \(h\) en mètre. Présenter les résultats sous forme de tableau que vous joindrez à votre compte rendu. <br/> <br/>
+
+      Indiquer le tableau (plausiblement relevé par un groupe d'élèves  en TP)  qui respecte la consigne : <br/>
+
+      \embed{reply3}<br/>
+    </li>
+    <li>À partir des relevés, tracer la pression relative \(P_{rel}\) en fonction de la hauteur \(h\).  <br/>
+      D'après l'allure de la courbe qui est assimilable à \embed{reply4}, <br/>
+      on peut dire que \(P_{rel}=f(h)\) est une fonction \embed{reply5,7}. <br/>
+    </li>
+    <li>À partir de cette courbe, donner une relation entre la pression relative \(P_{rel}\) en hPa et la hauteur d’eau \(h\) en m.  <br/>
+      \(P_{rel}=\)\embed{reply6,7} <br/> 
+    </li>
+    }
+    <li>    \if{\step=1}{Montrer qu’elle peut s’écrire} \(ΔP = P_B -P_A =\rho \cdot g \cdot h=\rho \cdot g(z_A - z_B)\)
+
+
+      <ul>
+	<li>  ρ \if{\step=2}{= \rho_eau kg&middot;m<sup>-3</sup>} : masse volumique du fluide \if{\step=1}{en kg&middot;m<sup>-3</sup>}</li>
+	<li> g = 9,81 N&middot;kg<sup>-1</sup> : intensité de la pesanteur</li>
+	<li>\(P_A\) : Pression au point A en Pa</li>
+	<li>\(P_B\) : Pression au point B en Pa</li>	
+	<li> \(h\) : hauteur du fluide séparant les points A et B en m</li>
+      </ul>
+      \if{\step=1}{En déduire la masse volumique du fluide : ρ<sub>exp</sub> = \embed{reply7}  kg&middot;m<sup>-3</sup> <br/>
+      La masse volumique du fluide étant en réalité de \rho_eau  kg&middot;m<sup>-3</sup> . Calculer l'erreur relative commise sur ρ<sub>exp</sub> : \embed{reply37,5} %.
+      }
+    </li>
+    \if{\step=2}{
+    <li>Calculer : une variation de hauteur de \print_hauteur_etage m correspond à une variation de pression de \embed{reply8,6} bar. </li>
+    <li>Compléter le document 3 en indiquant pour les 2 cas de figure la pression à chaque étage.
+
+      
+
+      
+      <ol>
+	<li>Cas de figure n°1</li>
+        Dans le cas de figure n°1 \embed{reply9 }à la pression de 3 bars.
+
+	<table>
+	  <tr>
+	    <td>étage</td>
+            <td>avant réducteur</td>
+	    <td>après réducteur</td>
+	  </tr>
+	  <tr>
+	    <td>6e</td>
+	    <td>\embed{reply20} bar</td>
+	    <td>\embed{reply21}</td>
+	  </tr>
+	  <tr>
+	    <td>5e</td>
+	    <td>\embed{reply18} bar</td>
+	    <td>\embed{reply19}</td>
+	  </tr>
+	  <tr>
+	    <td>4e</td>
+	    <td>\embed{reply16} bar</td>
+	    <td>\embed{reply17}</td>
+	  </tr>
+	  <tr>
+	    <td>3e</td>
+	    <td>\embed{reply14} bar</td>
+	    <td>\embed{reply15}</td>
+	  </tr>
+	  <tr>
+	    <td>2e</td>
+	    <td>\embed{reply12} bar</td>
+	    <td>\embed{reply13}</td>
+	  </tr>
+	  <tr>
+	    <td>1er</td>
+	    <td>\embed{reply10} bar</td>
+	    <td>\embed{reply11}</td>
+	  </tr>
+	</table>
+	<br/>
+	Dans le cas de figure n°1, les réducteurs sont tous réglés \embed{reply31} car la chute de pression à provoquer est \embed{reply32}.
+	<br/>
+	<li>Cas de figure n°2</li>
+	Dans le cas de figure n°2  \embed{reply22}  \embed{reply23} pour que le \embed{reply24,3} étage puisse disposer de 3 bars.
+
+        <table>
+	  <tr>
+	    <td>étage</td>
+	    <td>pression</td>
+	  </tr>
+	  <tr>
+	    <td>6e</td>
+	    <td>\embed{reply25} bar</td>
+	  </tr>
+	  <tr>
+	    <td>5e</td>
+	    <td>\embed{reply26} bar</td>
+	  </tr>
+	  <tr>
+	    <td>4e</td>
+	    <td>\embed{reply27} bar</td>
+	  </tr>
+	  <tr>
+	    <td>3e</td>
+	    <td>\embed{reply28} bar</td>
+	  </tr>
+	  <tr>
+	    <td>2e</td>
+	    <td>\embed{reply29} bar</td>
+	  </tr>
+	  <tr>
+	    <td>1er</td>
+	    <td>\embed{reply30} bar</td>
+	  </tr>
+	</table>
+	<br/>
+	Dans le cas de figure n°2, le réducteur doit être réglé pour que la pression au RDC soit de \embed{reply33} bar <br/>
+	Dans le cas de figure n°2, si le réducteur est réglé pour que la pression au RDC soit de 3 bars, indiquer quelle serait alors la pression disponible au \etage <sup>e</sup> étage :     \embed{reply34} bar. 
+      </ol>
+      <br/>
+      
+    </li>
+    <li>Répondre aux questions du conseil syndical sur le choix de l’installation.
+      <ol>
+	<li>Les étages seront-ils tous correctement desservis en pression dans les 2 cas de figure du document 3 ? \embed{reply35} correctement desservis dans les deux cas. </li>
+	<li>Déterminer la solution que le conseil syndical devrait retenir en justifiant votre choix. Je préconise \embed{reply36}</li>
+	<ol>
+    </li>
+    }
+  </ul>
+
+
+</div>
+
+
+}
+
+
+\answer{pression}{1;absolue,relative,atmosphérique}{type=menu}{option=shuffle}
+\answer{variation}{1;augmente,diminue}{type=menu}{option=shuffle}
+\answer{tableaux}{1;\tableaujuste, \tableaufaux1,\tableaufaux2,\tableaufaux3,\tableaufaux4}{type=radio}{option=shuffle}
+\answer{courbe}{une droite passant par l'origine|une droite qui passe par l'origine}{type=nocase}
+\answer{fonction}{linéaire}{type=nocase}
+\answer{equation}{\coef_dir*h}{type=equation}
+\answer{masse volumique}{\rho_exp}{type=numeric}
+\answer{deltaP}{\delta_pression}{type=numeric}
+\answer{3barscas1}{1; tous les étages seront, le premier étage sera, le dernier étage sera}{type=menu}{option=shuffle}
+\answer{amont1}{\p_amont1_raw-0.01, \p_amont1_raw+0.01}{type=range}
+\answer{aval1}{3 bar}{type=units}
+\answer{amont2}{\p_amont2_raw-0.01, \p_amont2_raw+0.01}{type=range}
+\answer{aval2}{3 bar}{type=units}
+\answer{amont3}{\p_amont3_raw-0.01, \p_amont3_raw+0.01}{type=range}
+\answer{aval3}{3 bar}{type=units}
+\answer{amont4}{\p_amont4_raw-0.01, \p_amont4_raw+0.01}{type=range}
+\answer{aval4}{3 bar}{type=units}
+\answer{amont5}{\p_amont5_raw-0.01, \p_amont5_raw+0.01}{type=range}
+\answer{aval5}{3 bar}{type=units}
+\answer{amont6}{\p_amont6_raw-0.01, \p_amont6_raw+0.01}{type=range}
+\answer{aval6}{3 bar}{type=units}
+\answer{3barscas2}{1; tous les étages inférieurs seront , tous les étages supérieurs seront, tous les étages seront, le premier étage sera, le dernier étage sera}{type=menu}{option=shuffle}
+\answer{surpression}{1;en surpression, en sous pression, à la même pression}{type=menu}{option=shuffle}
+\answer{6e}{3;1er,2nd,6e,4e,5e,3e}{type=menu} {option=sort}
+\answer{6cas2}{\p6_raw-0.01, \p6_raw+0.01}{type=range}
+\answer{5cas2}{\p5_raw-0.01, \p5_raw+0.01}{type=range}
+\answer{4cas2}{\p4_raw-0.01, \p4_raw+0.01}{type=range}
+\answer{3cas2}{\p3_raw-0.01, \p3_raw+0.01}{type=range}
+\answer{2cas2}{\p2_raw-0.01, \p2_raw+0.01}{type=range}
+\answer{1cas2}{\p1_raw-0.01, \p1_raw+0.01}{type=range}
+\answer{reducteursCas1}{1; de façon différente, de la même façon}{type=menu}{option=shuffle}
+\answer{justificationCas1}{1; différente, identique}{type=menu}{option=shuffle}
+\answer{RDC2}{\pRDC2_raw-0.01,\pRDC2_raw+0.01}{type=range}
+\answer{pression insuffisante}{\p_insuffisante_raw-0.01, \p_insuffisante_raw+0.01}{type=range}
+\answer{conseil1}{2;Ils sont,  Ils ne sont pas}{type=menu}{option=shuffle}
+\answer{conseil2}{1;la première solution avec un réducteur par étage, la deuxième solution avec un seul réducteur au RDC }{type=menu}{option=shuffle}
+\answer{erreur relative}{\erreur}{type=units}
