@@ -1,0 +1,83 @@
+\title{Activité III-2 La chaudière au gaz naturel  }
+\language{fr}
+\author{Raoul,Hatterer}
+\email{hatterer.med@laposte.net}
+\format{html}
+\precision{1000}
+\computeanswer{no}
+
+<!-- STYLE CSS -->
+\css{
+<style type="text/css">
+  h1{
+  background-color: white;
+  color: #2584AB; margin: 1% 1%; padding : 1%;}
+  .enonce{
+  background-color: #E7F7FF;
+  color: black; margin: 1% 1%; padding : 1%;}
+  .questions{
+  background-color: #CCF0FF;
+  color: black; margin: 1% 1%; padding : 1%;}
+  .question{
+  color:green;}
+  .solution{ background-color: #D6E4C1;
+  color : green  ;margin: 0; padding : 1% 5% 5% 5%;}
+  .definition{ background-color: #FFBF7F;
+  color : black  ;margin: 0 10% 0 10%; padding : 1% 1% 1% 1%;}
+  h1.solution{ background-color: #C5E0A2;
+  color: green; margin: 5% 0 1% -5pt; padding : 1%;}
+</style>
+}
+
+
+<!-- VARIABLES -->
+\comment{10cm sur 500px}
+\integer{largeur=500}
+\integer{hauteur=500}
+\integer{marge=20}
+\comment{sur 10cm il y a 100 graduations de 1mm}
+\text{repere1mm = slib(draw/repere \largeur,\hauteur,\marge,0,100,0,100,1,1,white,grey)}
+\text{repere5mm = slib(draw/repere \largeur,\hauteur,\marge,0,20,0,20,,,black,black)}
+\text{repere1cm = slib(draw/repere \largeur,\hauteur,\marge,0,10,0,10,,,red,red)}
+\text{dessin = draw((\largeur+1),(\largeur+1)
+\repere1mm
+\repere5mm
+\repere1cm
+)}
+
+
+\statement{
+
+
+<ol>
+<li> Expliquer ce qu’est une liaison hydrogène entre 2 molécules d’eau. </li>
+<li> Quelle quantité d’énergie Q faut-il pour élever la température de &#916;&#952; = &#952;f – &#952;i =15°C de m=200g d’eau.
+Donner la formule littérale qui permet de répondre à la question et calculer le résultat.</li>
+<li> Quelle est la quantité d’énergie Q’ qu’il faudrait pour refroidir cette même quantité d’eau de 15°C.
+Expliquer.</li>
+<li> Quelle est la quantité d’énergie nécessaire pour vaporiser m=50g d’eau à la température de 100°C ?
+Donner la formule littérale et réaliser le calcul.</li>
+<li> Quelle est la valeur de la chaleur latente de liquéfaction (condensation) Lf de l’eau à la pression de
+105Pa.</li>
+
+<li> Imprimer la courbe T = f(t) ?</li>
+
+
+<img src="\dessin" />
+
+<li> La courbe de la température de l’eau en fonction du temps présente 2 parties distinctes.
+a. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 1re partie de la courbe ?
+b. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 2e partie de la courbe ?
+</li>
+<li> Calculer, en seconde, l’intervalle de temps entre t2 et t1.</li>
+<li> Connaissant la puissance P du chauffe ballon, déduire la quantité d’énergie Q apportée à l’eau dans
+cet intervalle de temps en supposant que la chaleur du chauffe ballon chauffe essentiellement l’eau du
+ballon</li>
+<li>A l’aide des résultats de vos mesures, calculer alors la chaleur latente de vaporisation de l’eau Lveau.</li>
+<li>La chaleur latente de vaporisation de l’eau est en réalité Lv = 2256 kJ/kg.</li>
+Quel est le pourcentage d’erreur de votre résultat par rapport à la valeur théorique sachant que :
+</li>
+</ol>
+
+
+}
