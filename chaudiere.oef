@@ -1,4 +1,4 @@
-\title{Activité III-2 La chaudière au gaz naturel  }
+\title{Activité III-2 La chaudière au gaz naturel}
 \language{fr}
 \author{Raoul,Hatterer}
 \email{hatterer.med@laposte.net}
@@ -31,53 +31,83 @@
 
 
 <!-- VARIABLES -->
-\comment{10cm sur 500px}
-\integer{largeur=500}
-\integer{hauteur=500}
-\integer{marge=20}
-\comment{sur 10cm il y a 100 graduations de 1mm}
-\text{repere1mm = slib(draw/repere \largeur,\hauteur,\marge,0,100,0,100,1,1,white,grey)}
-\text{repere5mm = slib(draw/repere \largeur,\hauteur,\marge,0,20,0,20,,,black,black)}
-\text{repere1cm = slib(draw/repere \largeur,\hauteur,\marge,0,10,0,10,,,red,red)}
-\text{dessin = draw((\largeur+1),(\largeur+1)
+\comment{On fait chauffer l'eau pendant 30 min soit 1800s soit 1.8 ks}
+
+\comment{échelle : 1cm sur 50px}
+\comment{Largeur 18cm soit 900px}
+\integer{largeur=900}
+\comment{Hauteur 11cm soit 550px}
+\integer{hauteur=550}
+\integer{marge=30}
+\comment{Coefficients de la transformation affine}
+\real{a=(\largeur-2*\marge)/1800}
+\real{b=0}
+\real{c=0}
+\real{d=(2*\marge-\hauteur)/110}
+\real{tx=\marge}
+\real{ty=\hauteur-\marge}
+
+\integer{tempinitiale=50}
+\integer{tempfinale=100}
+
+
+\comment{en abscisse : sur 18cm il y a 180 graduations de 1mm}
+\comment{en ordonnée : sur 11cm il y a 110 graduations de 1mm}
+\text{repere1mm = slib(draw/repere \largeur,\hauteur,\marge,0,180,0,110,1,1,white,grey)}
+\text{repere5mmNoir = slib(draw/repere \largeur,\hauteur,\marge,0,36,0,22,,,black,black)}
+\text{repere1cmRouge = slib(draw/repere \largeur,\hauteur,\marge,0,18,0,11,,,red,red)}
+\text{chauffage = line 0,\tempinitiale,500,\tempfinale,red}
+\for{t=1 to 100 step 25}
+{\text{chauffage = \chauffage
+fcircle \t,50,10,blue
+}}
+
+
+\text{dessin = draw((\largeur+1),(\hauteur+1)
 \repere1mm
-\repere5mm
-\repere1cm
+\repere5mmNoir
+\repere1cmRouge
+linewidth 5
+affine \a,\b,\c,\d,\tx,\ty
+\chauffage
+\for{temp=0 to 1800 step 36}{
+fcircle \temp,50,10,green}
+
+
 )}
 
 
-\statement{
 
+\statement{
+\for{temp=0 to 1800 step 36}{ \temp}
 
 <ol>
-<li> Expliquer ce qu’est une liaison hydrogène entre 2 molécules d’eau. </li>
-<li> Quelle quantité d’énergie Q faut-il pour élever la température de &#916;&#952; = &#952;f – &#952;i =15°C de m=200g d’eau.
-Donner la formule littérale qui permet de répondre à la question et calculer le résultat.</li>
-<li> Quelle est la quantité d’énergie Q’ qu’il faudrait pour refroidir cette même quantité d’eau de 15°C.
-Expliquer.</li>
-<li> Quelle est la quantité d’énergie nécessaire pour vaporiser m=50g d’eau à la température de 100°C ?
-Donner la formule littérale et réaliser le calcul.</li>
-<li> Quelle est la valeur de la chaleur latente de liquéfaction (condensation) Lf de l’eau à la pression de
-105Pa.</li>
+  <li> Expliquer ce qu'est une liaison hydrogène entre 2 molécules d'eau. </li>
+  <li> Quelle quantité d'énergie Q faut-il pour élever la température de &#916;&#952; = &#952;f &#150; &#952;i =15°C de m=200g d'eau.
+    Donner la formule littérale qui permet de répondre à la question et calculer le résultat.</li>
+  <li> Quelle est la quantité d'énergie Q' qu'il faudrait pour refroidir cette même quantité d'eau de 15°C.
+    Expliquer.</li>
+  <li> Quelle est la quantité d'énergie nécessaire pour vaporiser m=50g d'eau à la température de 100°C ?
+    Donner la formule littérale et réaliser le calcul.</li>
+  <li> Quelle est la valeur de la chaleur latente de liquéfaction (condensation) Lf de l'eau à la pression de
+    105Pa.</li>
 
-<li> Imprimer la courbe T = f(t) ?</li>
+  <li> Imprimer la courbe T = f(t) ?</li>
 
 
-<img src="\dessin" />
+  <img src="\dessin" />
 
-<li> La courbe de la température de l’eau en fonction du temps présente 2 parties distinctes.
-a. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 1re partie de la courbe ?
-b. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 2e partie de la courbe ?
-</li>
-<li> Calculer, en seconde, l’intervalle de temps entre t2 et t1.</li>
-<li> Connaissant la puissance P du chauffe ballon, déduire la quantité d’énergie Q apportée à l’eau dans
-cet intervalle de temps en supposant que la chaleur du chauffe ballon chauffe essentiellement l’eau du
-ballon</li>
-<li>A l’aide des résultats de vos mesures, calculer alors la chaleur latente de vaporisation de l’eau Lveau.</li>
-<li>La chaleur latente de vaporisation de l’eau est en réalité Lv = 2256 kJ/kg.</li>
-Quel est le pourcentage d’erreur de votre résultat par rapport à la valeur théorique sachant que :
+  <li> La courbe de la température de l'eau en fonction du temps présente 2 parties distinctes.
+    a. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 1re partie de la courbe ?
+    b. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 2e partie de la courbe ?
+  </li>
+  <li> Calculer, en seconde, l'intervalle de temps entre t2 et t1.</li>
+  <li> Connaissant la puissance P du chauffe ballon, déduire la quantité d'énergie Q apportée à l'eau dans
+    cet intervalle de temps en supposant que la chaleur du chauffe ballon chauffe essentiellement l'eau du
+    ballon</li>
+  <li>A l'aide des résultats de vos mesures, calculer alors la chaleur latente de vaporisation de l'eau Lveau.</li>
+  <li>La chaleur latente de vaporisation de l'eau est en réalité Lv = 2256 kJ/kg.</li>
+  Quel est le pourcentage d'erreur de votre résultat par rapport à la valeur théorique sachant que :
 </li>
 </ol>
-
-
 }
