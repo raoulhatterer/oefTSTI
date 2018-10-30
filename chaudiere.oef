@@ -1,4 +1,4 @@
-\title{Activit� III-2 La chaudi�re au gaz naturel}
+\title{Activité III - La chaudière au gaz naturel}
 \language{fr}
 \author{Raoul,Hatterer}
 \email{hatterer.med@laposte.net}
@@ -6,7 +6,7 @@
 \precision{1000}
 \computeanswer{no}
 
-<!-- STYLE CSS -->
+<!-- Style CSS -->
 \css{
 <style type="text/css">
   h1{
@@ -26,6 +26,7 @@
   color : black  ;margin: 0 10% 0 10%; padding : 1% 1% 1% 1%;}
   h1.solution{ background-color: #C5E0A2;
   color: green; margin: 5% 0 1% -5pt; padding : 1%;}
+  .droite{float: right;}
 </style>
 }
 
@@ -33,7 +34,7 @@
 <!-- VARIABLES -->
 \comment{On fait chauffer l'eau pendant 30 min soit 1800s soit 1.8 ks}
 
-\comment{�chelle : 1cm sur 50px}
+\comment{échelle : 1cm sur 50px}
 \comment{Largeur 18cm soit 900px}
 \integer{largeur=900}
 \comment{Hauteur 11cm soit 550px}
@@ -50,16 +51,18 @@
 \integer{tempinitiale=50}
 \integer{tempfinale=100}
 
+\real{pente=(\tempfinale-\tempinitiale)/\t1}
 
 \comment{en abscisse : sur 18cm il y a 180 graduations de 1mm}
-\comment{en ordonn�e : sur 11cm il y a 110 graduations de 1mm}
+\comment{en ordonnée : sur 11cm il y a 110 graduations de 1mm}
 \text{repere1mm = slib(draw/repere \largeur,\hauteur,\marge,0,180,0,110,1,1,white,grey)}
 \text{repere5mmNoir = slib(draw/repere \largeur,\hauteur,\marge,0,36,0,22,,,black,black)}
 \text{repere1cmRouge = slib(draw/repere \largeur,\hauteur,\marge,0,18,0,11,,,red,red)}
 \text{chauffage = line 0,\tempinitiale,500,\tempfinale,red}
-\for{t=1 to 100 step 25}
+
+\for{t=1 to 1800 step 50}
 {\text{chauffage = \chauffage
-fcircle \t,50,10,blue
+point \t,50,red
 }}
 
 
@@ -70,44 +73,147 @@ fcircle \t,50,10,blue
 linewidth 5
 affine \a,\b,\c,\d,\tx,\ty
 \chauffage
-\for{temp=0 to 1800 step 36}{
-fcircle \temp,50,10,green}
-
 
 )}
 
 
 
 \statement{
-\for{temp=0 to 1800 step 36}{ \temp}
 
-<ol>
-  <li> Expliquer ce qu'est une liaison hydrog�ne entre 2 mol�cules d'eau. </li>
-  <li> Quelle quantit� d'�nergie Q faut-il pour �lever la temp�rature de &#916;&#952; = &#952;f &#150; &#952;i =15�C de m=200g d'eau.
-    Donner la formule litt�rale qui permet de r�pondre � la question et calculer le r�sultat.</li>
-  <li> Quelle est la quantit� d'�nergie Q' qu'il faudrait pour refroidir cette m�me quantit� d'eau de 15�C.
-    Expliquer.</li>
-  <li> Quelle est la quantit� d'�nergie n�cessaire pour vaporiser m=50g d'eau � la temp�rature de 100�C ?
-    Donner la formule litt�rale et r�aliser le calcul.</li>
-  <li> Quelle est la valeur de la chaleur latente de liqu�faction (condensation) Lf de l'eau � la pression de
-    105Pa.</li>
+<h1>Partie 1 - S’approprier le problème</h1>
+<div class="enonce">
 
-  <li> Imprimer la courbe T = f(t) ?</li>
+  <h2>Document 1 : chaudière à condensation au gaz naturel </h2>
+  <p>La chaudière à condensation permet de réduire de manière conséquente votre budget chauffage tout en préservant l’environnement et votre confort. La condensation permet une utilisation maximale et optimisée du gaz naturel (principalement constitué de méthane CH<sub>4</sub>) pour un rendement exceptionnel. </p>
+  
+  <p> Par rapport à une chaudière classique, la chaudière gaz à condensation c’est jusqu’à 15% de rendement en plus et jusqu’à 30% de consommation en moins. </p>
+  
+  <p> Moins chère à l’installation que d’autres solutions innovantes (pompe à chaleur, chaudière à granulés bois, ...), la chaudière à condensation vous garantit, en plus, un confort constant. La combustion du gaz naturel génère à la fois un dégagement de chaleur et des produits de combustion rejetant de la vapeur d’eau. La condensation de cette vapeur d’eau (retour à l’état liquide sous forme de gouttelettes) libère une quantité de chaleur supplémentaire. A la différence d’une chaudière classique, la chaudière à condensation récupère cette chaleur et la restitue au circuit de chauffage, ce qui permet d’améliorer le rendement et donc de réaliser de solides économies d’énergie. Le rejet en dioxyde de carbone est assez faible. <br/>
+    <span class="droite"> Source : http://www.gaz-nature.fr </span>
+  </p>
+</div>
+
+<center>
+  <img src="\imagedir/chaudiere1.png" width="400" alt="chaudière à condensation"/>
+</center>
+
+<div class="enonce">
+  <h2>Document 2 : chaleur latente (enthalpie) de condensation </h2>
+  Dans une chaudière « classique », ou basse température, les fumées et la vapeur d’eau issues de la combustion du gaz naturel sont rejetées dans l'atmosphère au lieu d’être totalement exploitées.
+  La chaudière gaz à condensation, conçue pour optimiser au maximum ses performances, tire profit de l’énergie thermique contenue dans ces fumées.
+  La chaleur latente est la quantité de chaleur (\embed{reply1,5}) qu’il faut fournir à \embed{reply2} de matière pour la faire changer \embed{reply3}. Les conséquences pratiques et économiques émises par ce principe sont considérables. La chaleur latente est également un des paramètres essentiels dans les techniques de chaudières à condensation. En effet, elle est thermiquement récupérée et permet de faire croître le rendement de l’installation.
+
+  <h3>Étape 1 - La combustion</h3>
+  Lors de la mise en marche de la chaudière à condensation, le circuit d’eau est réchauffé par le brûleur gaz naturel. La combustion du gaz émet des fumées contenant de la \embed{reply4,8} à haute température qui sera valorisée lors du processus de condensation.
+  <h3>Étape 2 - L’émission de chaleur</h3>
+  L’eau chaude produite est distribuée par la pompe dans le circuit de chauffage, auquel sont raccordés les radiateurs ou le plancher chauffant, installés dans chaque pièce du logement.
+  <h3>Étape 3 - La condensation (liquéfaction) </h3> 
+  L’eau de retour du circuit de chauffage, refroidie, revient vers la chaudière à condensation et capte au travers d’un échangeur une partie de l’énergie contenue dans les fumées. <br/>
+  Au contact de la paroi froide, la vapeur d’eau que les fumées contiennent se condense en libérant de la chaleur. Au cours de ce processus les fumées sont refroidies et l’eau réchauffée. <br/>
+  Ainsi, on tire un maximum d’énergie de la combustion du gaz naturel.
+  <h3>Étape 4 - L’évacuation des condensats</h3>
+  L'eau résultant de la condensation (les condensats), est ensuite évacuée vers le réseau des eaux usées.
+  Ce type d’équipement est donc en mesure de récupérer, d’une part la chaleur présente dans les
+  fumées, mais également la chaleur latente de condensation de la vapeur d’eau (qui était perdue
+  jusqu’à la mise sur le marché d’une "chaudière condensation"). <br/> <br/>
+  <span class="droite">Source : https://www.gdfsuez-dolcevita.fr/chaudiere-gaz-naturel/chaudiere-a-condensation.html</span>
+  <br/>
+</div>
 
 
-  <img src="\dessin" />
+<div class="questions">
+  <h2>Questions</h2>
+  <ol>
+    <li>À l’aide des documents ci-dessus, préciser quel est le combustible « brûlé » dans la chaudière à condensation ? Quel est le comburant ?
+      <ul>
+	<li>Combustible : le \embed{reply5,8} de formule \embed{reply6,8} </li>
+	<li>Comburant : le \embed{reply7,8} de formule \embed{reply8,8}</li>
+      </ul>
+    </li>
+    <li>À l’aide du document, préciser les deux produits de cette réaction de combustion
+      <ul>
+	<li>\embed{reply9,8} de formule \embed{reply10,8}</li>
+	<li>le dioxyde de carbone de formule CO_2</li>
+      </ul>
+    </li>
+    <li>Écrire l’équation ajustée de combustion à l’aide de vos connaissances de 1ère.</li>
+    <li>La combustion est-elle endo ou exothermique ?</li>
+    <li>Par quel procédé la chaudière à condensation permet de récupérer plus de chaleur qu’une chaudière « traditionnelle » ?</li>
+    <li>Quelle(s) grandeur(s) physique(s) devons-nous connaitre pour évaluer la quantité de chaleur (énergie) récupérée en plus par une chaudière à condensation (par rapport à une chaudière « traditionnelle » ?)</li>
+  </ol>
+</div>
 
-  <li> La courbe de la temp�rature de l'eau en fonction du temps pr�sente 2 parties distinctes.
-    a. Quel est le r�le de la chaleur apport�e par le chauffe-ballon lors de la 1re partie de la courbe ?
-    b. Quel est le r�le de la chaleur apport�e par le chauffe-ballon lors de la 2e partie de la courbe ?
-  </li>
-  <li> Calculer, en seconde, l'intervalle de temps entre t2 et t1.</li>
-  <li> Connaissant la puissance P du chauffe ballon, d�duire la quantit� d'�nergie Q apport�e � l'eau dans
-    cet intervalle de temps en supposant que la chaleur du chauffe ballon chauffe essentiellement l'eau du
-    ballon</li>
-  <li>A l'aide des r�sultats de vos mesures, calculer alors la chaleur latente de vaporisation de l'eau Lveau.</li>
-  <li>La chaleur latente de vaporisation de l'eau est en r�alit� Lv = 2256 kJ/kg.</li>
-  Quel est le pourcentage d'erreur de votre r�sultat par rapport � la valeur th�orique sachant que :
+<h1>Partie 2 - Réaliser </h1>
+<div class="enonce">
+  <h2>1. Manipulation</h2>
+  (voir TP)
+  <h2>2. Paramétrage de l’acquisition</h2>
+  (voir TP)
+  <h2>3. Réalisation de la manipulation</h2>
+  (voir TP)
+</div>
+
+<h1>Partie 3 – Exploiter et valider mes résultats</h1>
+
+<div class="enonce">
+  <h2>Document 3</h2>
+  <p>Les molécules d’eau interagissent sous l’effet des forces intermoléculaires appelées forces de Van-der-Waals, plus particulièrement les liaisons hydrogènes. Pour vaincre (ou « casser ») ces liaisons il faut un apport plus ou mois important d’énergie. </p>
+  <p>Ainsi, pour l’eau liquide, de l’énergie est puisée dans le milieu environnant (air, contenant...) et permet de casser ces liaisons. Mais à peine une liaison est rompue entre 2 molécules, que celle-ci se reforme entre 2 autres. Dans l’eau liquide, tout ce passe comme si les molécules glissaient en s’attachant puis se détachant l’une de l’autre.</p>
+  <p>Un apport d’énergie (chauffage) entraîne alors une augmentation de la température, soit de l’énergie cinétique des molécules. On définit la capacité thermique massique \(Ce\) de l’eau comme la quantité d’énergie qu’il fait apporter à 1kg d’eau pour augmenter sa température de 1°C. Pour l’eau liquide, Ce = 4185 J&middot;°C<sup>-1</sup>&middot;kg<sup>-1</sup>. L’apport d’énergie sera compté positivement si l’eau reçoit cette énergie.</p>
+  <p>Lorsque la température d’ébullition est atteinte (100°C à la pression de 10<sup>5</sup>Pa pour l’eau), l’apport d’énergie ne sert plus à accélérer les molécules mais à rompre les liaisons entre ces molécules. La température n’augmente plus, mais l’eau change d’état : elle se vaporise.</p>
+  <p>On définit la chaleur latente de vaporisation \(Lv\) comme la quantité d’énergie qu’il faut apporter à 1kg d’eau pour la vaporiser à pression constante.  Pour l’eau, Lv = 2257 kJ&middot;kg<sup>-1</sup>. </p>
+  <p>La quantité de chaleur Q (en J) à apporter pour vaporiser une masse m (en kg) d’un corps, dépend de la nature de ce corps, et de la chaleur latente de vaporisation L (en Joules par kilogramme (J/kg))</p>
+  <center>  \(Q = m \times L_V\) </center>
+</div>
+<center>
+  <img src="\imagedir/chaudiere2.png" width="400" alt="chaudière à condensation"/>
+</center>
+
+
+<div class="questions">
+  <h2>Questions</h2>
+  <ol>
+    <li> Expliquer ce qu'est une liaison hydrogène entre 2 molécules d'eau. </li>
+    <li> Quelle quantité d'énergie Q faut-il pour élever la température ΔΘ=Θf-Θi= 15°C de m=200g d'eau.
+      Donner la formule littérale qui permet de répondre à la question et calculer le résultat.</li>
+    <li> Quelle est la quantité d'énergie Q' qu'il faudrait pour refroidir cette même quantité d'eau de 15°C.
+      Expliquer.</li>
+    <li> Quelle est la quantité d'énergie nécessaire pour vaporiser m=50g d'eau à la température de 100°C ?
+      Donner la formule littérale et réaliser le calcul.</li>
+    <li> Quelle est la valeur de la chaleur latente de liquéfaction (condensation) Lf de l'eau à la pression de
+      105Pa.</li>
+
+    <li> Imprimer la courbe T = f(t) ?</li>
+
+
+    <img src="\dessin" />
+
+    <li> La courbe de la température de l'eau en fonction du temps présente 2 parties distinctes.
+      a. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 1re partie de la courbe ?
+      b. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 2e partie de la courbe ?
+    </li>
+    <li> Calculer, en seconde, l'intervalle de temps entre t2 et t1.</li>
+    <li> Connaissant la puissance P du chauffe ballon, déduire la quantité d'énergie Q apportée à l'eau dans
+      cet intervalle de temps en supposant que la chaleur du chauffe ballon chauffe essentiellement l'eau du
+      ballon</li>
+    <li>A l'aide des résultats de vos mesures, calculer alors la chaleur latente de vaporisation de l'eau Lveau.</li>
+    <li>La chaleur latente de vaporisation de l'eau est en réalité Lv = 2256 kJ/kg.</li>
+    Quel est le pourcentage d'erreur de votre résultat par rapport à la valeur théorique ?
 </li>
 </ol>
+</div>
+
 }
+
+
+
+\answer{l'énergie}{l'énergie}{type=atext }{option=noaccent}
+\answer{1kg}{un kilogramme|1kg|1 kg}{type=atext}
+\answer{d’état physique}{d’état physique}{type=atext }{option=noaccent}
+\answer{vapeur d’eau}{vapeur d’eau}{type=atext}
+\answer{méthane}{1;méthane,éthane,propane,butane}{type=menu}{option=shuffle}
+\answer{CH4}{CH4}{type=chembrut}
+\answer{dioxygène}{dioxygène}{type=atext}
+\answer{O2}{O2}{type=chembrut}
+\answer{l'eau}{l'eau}{type=atext}
+\answer{H2O}{H2O}{type=chembrut}
