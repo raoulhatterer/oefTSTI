@@ -32,6 +32,17 @@
 
 
 <!-- VARIABLES -->
+\integer{icombustible=randint(1..3)}
+\matrix{combustible=du propane (C<sub>3</sub>H<sub>8</sub>),du butane (C<sub>4</sub>H<sub>10</sub>),de l'éthanol (C<sub>2</sub>H<sub>6</sub>O)}
+\matrix{equation=C3H8 + 5O2 -> 3CO2 + 4 H2O , C4H10 + 13/2 O2 -> 4CO2 + 5 H2O , C2H6O + 3 O2 -> 2 CO2 + 3 H2O}
+\real{deltatheta=randint(150..500)/10}
+\integer{masse=randint(15..50)*10}
+\integer{ceau=4185}
+\real{Qdeltatheta=\masse*\ceau*\deltatheta/1000}
+\integer{Lv=2257}
+\real{Qvap=\masse*\Lv/1000}
+\integer{Pelec=randint(45..50)*10}
+
 \comment{On fait chauffer l'eau pendant 30 min soit 1800s soit 1.8 ks}
 
 \comment{échelle : 1cm sur 50px}
@@ -48,29 +59,45 @@
 \real{tx=\marge}
 \real{ty=\hauteur-\marge}
 
-\integer{tempinitiale=50}
+\integer{tempinitiale=randint(25..50)}
 \integer{tempfinale=100}
+\integer{massebecher=randint(100..120)}
+\integer{meau=200}
 
-\real{pente=(\tempfinale-\tempinitiale)/\t1}
+\integer{t1=randint(16..20)*25}
+\integer{t2=1800}
+\comment{Perte de 5 à 7g d'eau par minute}
+\integer{massefinale=\massebecher+\meau-(\t2-\t1)/60*randint(50..70)/10}
+\integer{Lvexp=(\Pelec*(\t2-\t1))/(\massefinale-\massebecher)}
+\integer{pourcentage=(\Lvexp-\Lv)/\Lv*100}
+
 
 \comment{en abscisse : sur 18cm il y a 180 graduations de 1mm}
 \comment{en ordonnée : sur 11cm il y a 110 graduations de 1mm}
 \text{repere1mm = slib(draw/repere \largeur,\hauteur,\marge,0,180,0,110,1,1,white,grey)}
 \text{repere5mmNoir = slib(draw/repere \largeur,\hauteur,\marge,0,36,0,22,,,black,black)}
 \text{repere1cmRouge = slib(draw/repere \largeur,\hauteur,\marge,0,18,0,11,,,red,red)}
-\text{chauffage = line 0,\tempinitiale,500,\tempfinale,red}
+\text{chauffage = line 0,\tempinitiale,\t1,\tempfinale,blue}
+\text{chauffage = \chauffage
+line \t1,\tempfinale,\t2,\tempfinale, blue}
+\text{chauffage=\chauffage
+text red,75,-1,huge,100
+text black,1700,-1,huge,t (en s)
+text red,-50,12,huge,10
+text black,10,114,huge,température (en °C)
+}
 
-\for{t=1 to 1800 step 50}
-{\text{chauffage = \chauffage
-point \t,50,red
-}}
+\comment{for}{t=1 to \t2 step 50}
+\comment{{\text{chauffage = \chauffage}
+\comment{point \t,50,red}
+\comment{}}}
 
 
 \text{dessin = draw((\largeur+1),(\hauteur+1)
 \repere1mm
 \repere5mmNoir
 \repere1cmRouge
-linewidth 5
+linewidth 4
 affine \a,\b,\c,\d,\tx,\ty
 \chauffage
 
@@ -101,10 +128,10 @@ affine \a,\b,\c,\d,\tx,\ty
   <h2>Document 2 : chaleur latente (enthalpie) de condensation </h2>
   Dans une chaudière « classique », ou basse température, les fumées et la vapeur d’eau issues de la combustion du gaz naturel sont rejetées dans l'atmosphère au lieu d’être totalement exploitées.
   La chaudière gaz à condensation, conçue pour optimiser au maximum ses performances, tire profit de l’énergie thermique contenue dans ces fumées.
-  La chaleur latente est la quantité de chaleur (\embed{reply1,5}) qu’il faut fournir à \embed{reply2} de matière pour la faire changer \embed{reply3}. Les conséquences pratiques et économiques émises par ce principe sont considérables. La chaleur latente est également un des paramètres essentiels dans les techniques de chaudières à condensation. En effet, elle est thermiquement récupérée et permet de faire croître le rendement de l’installation.
+  La chaleur latente est la quantité de chaleur (\embed{reply1,8}) qu’il faut fournir à \embed{reply2,12} de matière pour la faire changer \embed{reply3,12}. Les conséquences pratiques et économiques émises par ce principe sont considérables. La chaleur latente est également un des paramètres essentiels dans les techniques de chaudières à condensation. En effet, elle est thermiquement récupérée et permet de faire croître le rendement de l’installation.
 
   <h3>Étape 1 - La combustion</h3>
-  Lors de la mise en marche de la chaudière à condensation, le circuit d’eau est réchauffé par le brûleur gaz naturel. La combustion du gaz émet des fumées contenant de la \embed{reply4} à haute température qui sera valorisée lors du processus de condensation.
+  Lors de la mise en marche de la chaudière à condensation, le circuit d’eau est réchauffé par le brûleur gaz naturel. La combustion du gaz émet des fumées contenant de la \embed{reply4,10} à haute température qui sera valorisée lors du processus de condensation.
   <h3>Étape 2 - L’émission de chaleur</h3>
   L’eau chaude produite est distribuée par la pompe dans le circuit de chauffage, auquel sont raccordés les radiateurs ou le plancher chauffant, installés dans chaque pièce du logement.
   <h3>Étape 3 - La condensation (liquéfaction) </h3> 
@@ -126,31 +153,43 @@ affine \a,\b,\c,\d,\tx,\ty
   <ol>
     <li>À l’aide des documents ci-dessus, préciser quel est le combustible « brûlé » dans la chaudière à condensation ? Quel est le comburant ?
       <ul>
-	<li>Combustible : le \embed{reply5,8} de formule \embed{reply6,8} </li>
-	<li>Comburant : le \embed{reply7,8} de formule \embed{reply8,8}</li>
+	<li>Combustible : le \embed{reply5,12} de formule \embed{reply6,6} </li>
+	<li>Comburant : le \embed{reply7,8} de formule \embed{reply8,6}</li>
       </ul>
     </li>
     <li>À l’aide du document, préciser les deux produits de cette réaction de combustion
       <ul>
 	<li>\embed{reply9,8} de formule \embed{reply10,8}</li>
-	<li>Le \embed{reply11} de formule \embed{reply12,8}</li>
+	<li>Le \embed{reply11} de formule \embed{reply12,6}</li>
       </ul>
     </li>
-    <li>Écrire l’équation ajustée de combustion à l’aide de vos connaissances de 1<sup>re</sup>.</li>
-    <li>La combustion est-elle endo ou exothermique ?</li>
+    <li>Écrire l’équation ajustée de combustion à l’aide de vos connaissances de 1<sup>re</sup> :
+      \embed{reply13} </li>
+    (attention: laisser un espace de chaque chaque coté des + et de la flèche de réaction -> ) <br/>
+    Écrire l'équation de combustion si le combustible est du \combustible[\icombustible] :
+    \embed{reply14}
+    <li>La combustion est-elle endothermique ou exothermique ?</li>
+    La combustion est \embed{reply15,8} ce qui signifie que la réaction \embed{reply16,14}.
     <li>Par quel procédé la chaudière à condensation permet de récupérer plus de chaleur qu’une chaudière « traditionnelle » ?</li>
+    L'énergie récupérée a deux origines : La vapeur d'eau contenue dans les fumées chaudes va se refroidir jusqu'à environ \embed{reply17,6}°C en \embed{reply18,6} de l'énergie au milieu extérieur mais surtout cette vapeur va ensuite se \embed{reply19,8}. Ce changement d'état libère de \embed{reply20,8} d'énergie.
     <li>Quelle(s) grandeur(s) physique(s) devons-nous connaitre pour évaluer la quantité de chaleur (énergie) récupérée en plus par une chaudière à condensation (par rapport à une chaudière « traditionnelle » ?)</li>
+    Il nous faut connaître :
+    <ul>
+      <li>la \embed{reply21,18} qui s'est \embed{reply22,10} ;</li>
+      <li>l'énergie échangée (libérée ou absorbée)  lorsque 1kg d'eau change d'état.</li>
+    </ul>
+
   </ol>
 </div>
 
 <h1>Partie 2 - Réaliser </h1>
 <div class="enonce">
   <h2>1. Manipulation</h2>
-  (voir TP)
+  (voir TP) Un groupe d'élève utilise un bec électrique et un becher à la place du ballon et du chauffe ballon. Ces élèves mesurent la masse de leur becher : \massebecher g dans lequel ils introduisent exactement 200 g d'eau. Ils mesurent aussi la puissance du bec électrique: \Pelec W. 
   <h2>2. Paramétrage de l’acquisition</h2>
-  (voir TP)
+  (voir TP) Ils paramètrent l'acquisition pour une durée t<sub>2</sub> de 30 minutes.
   <h2>3. Réalisation de la manipulation</h2>
-  (voir TP)
+  (voir TP) Il leur était demandé de relever la durée t<sub>1</sub> au bout de laquelle l'eau se mettait à bouillir. Mais ils ont omis de le faire. Après les 30 minutes de chauffage, ils replacent le becher  avec l'eau qu'il contient sur la balance. Elle indique alors \massefinale g.
 </div>
 
 <h1>Partie 3 – Exploiter et valider mes résultats</h1>
@@ -159,7 +198,7 @@ affine \a,\b,\c,\d,\tx,\ty
   <h2>Document 3</h2>
   <p>Les molécules d’eau interagissent sous l’effet des forces intermoléculaires appelées forces de Van-der-Waals, plus particulièrement les liaisons hydrogènes. Pour vaincre (ou « casser ») ces liaisons il faut un apport plus ou mois important d’énergie. </p>
   <p>Ainsi, pour l’eau liquide, de l’énergie est puisée dans le milieu environnant (air, contenant...) et permet de casser ces liaisons. Mais à peine une liaison est rompue entre 2 molécules, que celle-ci se reforme entre 2 autres. Dans l’eau liquide, tout ce passe comme si les molécules glissaient en s’attachant puis se détachant l’une de l’autre.</p>
-  <p>Un apport d’énergie (chauffage) entraîne alors une augmentation de la température, soit de l’énergie cinétique des molécules. On définit la capacité thermique massique \(Ce\) de l’eau comme la quantité d’énergie qu’il fait apporter à 1kg d’eau pour augmenter sa température de 1°C. Pour l’eau liquide, Ce = 4185 J&middot;°C<sup>-1</sup>&middot;kg<sup>-1</sup>. L’apport d’énergie sera compté positivement si l’eau reçoit cette énergie.</p>
+  <p>Un apport d’énergie (chauffage) entraîne alors une augmentation de la température, soit de l’énergie cinétique des molécules. On définit la capacité thermique massique \(C_{eau}\) de l’eau comme la quantité d’énergie qu’il fait apporter à 1kg d’eau pour augmenter sa température de 1°C. Pour l’eau liquide, Ceau = 4185 J&middot;°C<sup>-1</sup>&middot;kg<sup>-1</sup>. L’apport d’énergie sera compté positivement si l’eau reçoit cette énergie.</p>
   <p>Lorsque la température d’ébullition est atteinte (100°C à la pression de 10<sup>5</sup>Pa pour l’eau), l’apport d’énergie ne sert plus à accélérer les molécules mais à rompre les liaisons entre ces molécules. La température n’augmente plus, mais l’eau change d’état : elle se vaporise.</p>
   <p>On définit la chaleur latente de vaporisation \(Lv\) comme la quantité d’énergie qu’il faut apporter à 1kg d’eau pour la vaporiser à pression constante.  Pour l’eau, Lv = 2257 kJ&middot;kg<sup>-1</sup>. </p>
   <p>La quantité de chaleur Q (en J) à apporter pour vaporiser une masse m (en kg) d’un corps, dépend de la nature de ce corps, et de la chaleur latente de vaporisation L (en Joules par kilogramme (J/kg))</p>
@@ -174,31 +213,57 @@ affine \a,\b,\c,\d,\tx,\ty
   <h2>Questions</h2>
   <ol>
     <li> Expliquer ce qu'est une liaison hydrogène entre 2 molécules d'eau. </li>
-    <li> Quelle quantité d'énergie Q faut-il pour élever la température ΔΘ=Θf-Θi= 15°C de m=200g d'eau.
+    Une liaison hydrogène entre deux molécules d'eau est une liaison \embed{reply23,10} c'est à dire une liaison entre atomes appartenant à \embed{reply24,14}.
+    Une liaison hydrogène implique un atome \embed{reply25,10} relié à un atome très électonégatif (N,O F). Une liaison très faible (comparée aux liaisons covalentes liant les atomes aux sein des molécules) peut alors s'établir en direction d'une molécule à proximité si celle-ci possède un atome électronégatif.
+    
+    <li> Quelle quantité d'énergie Q faut-il pour élever la température ΔΘ=Θf-Θi= \deltatheta °C de m=\masse g d'eau.
       Donner la formule littérale qui permet de répondre à la question et calculer le résultat.</li>
-    <li> Quelle est la quantité d'énergie Q' qu'il faudrait pour refroidir cette même quantité d'eau de 15°C.
+    <ul>
+      <li>Formule littérale : \embed{reply26}</li>
+      <li>Résultat numérique : Q = \embed{reply27} J</li>
+    </ul>
+    <li> Quelle est la quantité d'énergie Q' qu'il faudrait pour refroidir cette même quantité d'eau de \deltatheta °C.
       Expliquer.</li>
-    <li> Quelle est la quantité d'énergie nécessaire pour vaporiser m=50g d'eau à la température de 100°C ?
+    <ul>
+      <li>Q' = \embed{reply28} J</li>
+      <li>Cela signifie que \embed{reply29} J sont cédés par l'eau au milieu extérieur lorsqu'elle refroidie de \embed{reply30} °C </li>
+    </ul>
+    <li> Quelle est la quantité d'énergie nécessaire pour vaporiser m=\masse g d'eau à la température de 100°C ?
       Donner la formule littérale et réaliser le calcul.</li>
-    <li> Quelle est la valeur de la chaleur latente de liquéfaction (condensation) Lf de l'eau à la pression de
-      105Pa.</li>
+    <ul>
+      <li>Formule littérale : \embed{reply31}</li>
+      <li>Résultat numérique : Q = \embed{reply32} kJ</li>
+    </ul>
+    <li> Quelle est la valeur de la chaleur latente de liquéfaction (condensation) L<sub>liq</sub> de l'eau à la pression de
+      10<sup>5</sup>Pa.</li>
+    <ul>
+      <li>L<sub>liq</sub> = \embed{reply33} kJ&middot;kg<sup>-1</sup>.</li>
+    </ul>
+    <li> Imprimer la courbe T = f(t)</li>
 
-    <li> Imprimer la courbe T = f(t) ?</li>
-
-
-    <img src="\dessin" />
-
+    <center>
+      <img src="\dessin" />
+    </center>
     <li> La courbe de la température de l'eau en fonction du temps présente 2 parties distinctes.
-      a. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 1re partie de la courbe ?
-      b. Quel est le rôle de la chaleur apportée par le chauffe-ballon lors de la 2e partie de la courbe ?
+      <ol>
+	<li>Le rôle de la chaleur apportée par le chauffe-ballon lors de la 1re partie de la courbe est de \embed{reply34}</li>
+	<li>Le rôle de la chaleur apportée par le chauffe-ballon lors de la 2e partie de la courbe est de \embed{reply35}</li>
+	<li>Graphiquement on peut retrouver la valeur de t<sub>1</sub> que les élèves ont omis de relever : \embed{reply36} s  </li>
+      </ol>
     </li>
-    <li> Calculer, en seconde, l'intervalle de temps entre t2 et t1.</li>
-    <li> Connaissant la puissance P du chauffe ballon, déduire la quantité d'énergie Q apportée à l'eau dans
-      cet intervalle de temps en supposant que la chaleur du chauffe ballon chauffe essentiellement l'eau du
-      ballon</li>
-    <li>A l'aide des résultats de vos mesures, calculer alors la chaleur latente de vaporisation de l'eau Lveau.</li>
-    <li>La chaleur latente de vaporisation de l'eau est en réalité Lv = 2256 kJ/kg.</li>
-    Quel est le pourcentage d'erreur de votre résultat par rapport à la valeur théorique ?
+    <li> Calculer, en seconde, l'intervalle de temps entre t<sub>1</sub> et t<sub>2</sub>.  \embed{reply37} s</li>
+    <li> Connaissant la puissance P du chauffe ballon (ou celle du bec électrique), déduire la quantité d'énergie Q apportée à l'eau dans
+      cet intervalle de temps en supposant que la chaleur du chauffe ballon (ou celle du bec électrique) chauffe essentiellement l'eau du
+      ballon (ou celle du becher)</li>
+    <ul>
+      <li>Q = \embed{reply38} J</li>
+    </ul>
+    <li>A l'aide des résultats de vos mesures, calculer alors la chaleur latente de vaporisation de l'eau Lv<sub>eau</sub>.</li>
+    <ul>
+      <li>Lv = \embed{reply39} kJ/kg</li>
+    </ul>
+    <li>La chaleur latente de vaporisation de l'eau est en réalité Lv = 2257 kJ/kg. Conclusion ?</li>
+L'erreur produite lors de la détermination est énorme \pourcentage %.Conclusion :  la supposition faite à la question 9 est fausse.
 </li>
 </ol>
 </div>
@@ -209,7 +274,7 @@ affine \a,\b,\c,\d,\tx,\ty
 
 \answer{l'énergie}{l'énergie}{type=atext }{option=noaccent}
 \answer{1kg}{un kilogramme|1kg|1 kg}{type=atext}
-\answer{d’état physique}{d’état physique}{type=atext }{option=noaccent}
+\answer{d’état physique}{d’état physique | d'état}{type=atext }{option=noaccent}
 \answer{vapeur d’eau}{vapeur d’eau}{type=atext}
 \answer{méthane}{1;méthane,éthane,propane,butane}{type=menu}{option=shuffle}
 \answer{CH4}{CH4}{type=chembrut}
@@ -219,3 +284,30 @@ affine \a,\b,\c,\d,\tx,\ty
 \answer{H2O}{H2O}{type=atext}
 \answer{dioxyde de carbone}{dioxyde de carbone}{type=atext}
 \answer{CO2}{CO2}{type=atext}
+\answer{équation de combustion}{CH4 + 2O2 -> CO2 + 2H2O}{type=chemeq}
+\answer{équation de combustion}{\equation[\icombustible]}{type=chemeq}
+\answer{exothermique}{2;endothermique,exothermique}{type=menu}{option=shuffle}
+\answer{libère de l'énergie}{libère de l'énergie|produit de la chaleur}{type=atext}
+\answer{100}{100}{type=numeric}
+\answer{cédant}{cédant | donnant | libérant | restituant}{type=atext}
+\answer{liquéfier}{liquéfier | condenser}{type=atext}
+\answer{beaucoup}{2; très peu,beaucoup}{type=menu}{option=shuffle}
+\answer{masse de vapeur d'eau}{masse de vapeur d'eau | la masse d'eau}{type=atext}
+\answer{liquéfiée}{liquéfiée | condensée}{type=atext}
+\answer{intermoléculaire}{1;intermoléculaire,intramoléculaire}{type=menu}{option=shuffle}
+\answer{deux molécules différentes}{1;deux molécules différentes, la même molécule}{type=menu}{option=shuffle}
+\answer{d'hydrogène}{d'hydrogène}{type=atext}
+\answer{Q=mcdelta theta}{1;Q = m·Ceau·ΔΘ,Q = m·Lv}{type=menu}{option=shuffle}
+\answer{Qdeltatheta}{\Qdeltatheta*0.9 , \Qdeltatheta*1.1}{type=range}
+\answer{Q'deltatheta}{-\Qdeltatheta*1.1 , -\Qdeltatheta*0.9}{type=range}
+\answer{absQ'}{\Qdeltatheta*0.9 , \Qdeltatheta*1.1}{type=range}
+\answer{deltatheta}{\deltatheta}{type=numeric}
+\answer{Q=mcdelta theta}{2;Q = m·Ceau·ΔΘ,Q = m·Lv}{type=menu}{option=shuffle}
+\answer{Qvap}{\Qvap*0.9 , \Qvap*1.1}{type=range}
+\answer{Ll}{-\Lv}{type=numeric}
+\answer{chauffer}{1;chauffer l'eau, vaporiser une partie de l'eau}{type=menu}{option=shuffle}
+\answer{vaporiser}{2;chauffer l'eau, vaporiser une partie de l'eau}{type=menu}{option=shuffle}
+\answer{t1}{\t1-5,\t1+5}{type=range}
+\answer{delta t}{\t2-\t1-5,\t2-\t1+5}{type=range}
+\answer{Qchauffeballon}{\Pelec*(\t2-\t1-5),\Pelec*(\t2-\t1+5)}{type=range}
+\answer{Lvexp}{\Lvexp*0.9,\Lvexp*1.1}{type=range}
