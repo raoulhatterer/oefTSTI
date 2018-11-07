@@ -272,31 +272,31 @@ L'erreur produite lors de la détermination est énorme \pourcentage %.Conclusio
 
 
 
-\answer{l'énergie}{l'énergie}{type=atext }{option=noaccent}
+\answer{l'énergie}{l'énergie|l’énergie}{type=atext }{option=noaccent}
 \answer{1kg}{un kilogramme|1kg|1 kg}{type=atext}
-\answer{d’état physique}{d’état physique | d'état}{type=atext }{option=noaccent}
+\answer{d’état physique}{d’état physique|d'état physique |d’état|d'état}{type=atext }{option=noaccent}
 \answer{vapeur d’eau}{vapeur d’eau}{type=atext}
 \answer{méthane}{1;méthane,éthane,propane,butane}{type=menu}{option=shuffle}
 \answer{CH4}{CH4}{type=chembrut}
 \answer{dioxygène}{dioxygène}{type=atext}
 \answer{O2}{O2}{type=chembrut}
-\answer{l'eau}{l'eau}{type=atext}
+\answer{l'eau}{l’eau|l'eau}{type=atext}
 \answer{H2O}{H2O}{type=atext}
 \answer{dioxyde de carbone}{dioxyde de carbone}{type=atext}
 \answer{CO2}{CO2}{type=atext}
 \answer{équation de combustion}{CH4 + 2O2 -> CO2 + 2H2O}{type=chemeq}
 \answer{équation de combustion}{\equation[\icombustible]}{type=chemeq}
 \answer{exothermique}{2;endothermique,exothermique}{type=menu}{option=shuffle}
-\answer{libère de l'énergie}{libère de l'énergie|produit de la chaleur}{type=atext}
+\answer{libère de l'énergie}{libère de l'énergie|libère de l’énergie|produit de la chaleur}{type=atext}
 \answer{100}{100}{type=numeric}
 \answer{cédant}{cédant | donnant | libérant | restituant}{type=atext}
 \answer{liquéfier}{liquéfier | condenser}{type=atext}
 \answer{beaucoup}{2; très peu,beaucoup}{type=menu}{option=shuffle}
-\answer{masse de vapeur d'eau}{masse de vapeur d'eau | la masse d'eau}{type=atext}
+\answer{masse de vapeur d'eau}{masse de vapeur d'eau|masse de vapeur d’eau|la masse d'eau|la masse d’eau}{type=atext}
 \answer{liquéfiée}{liquéfiée | condensée}{type=atext}
 \answer{intermoléculaire}{1;intermoléculaire,intramoléculaire}{type=menu}{option=shuffle}
 \answer{deux molécules différentes}{1;deux molécules différentes, la même molécule}{type=menu}{option=shuffle}
-\answer{d'hydrogène}{d'hydrogène}{type=atext}
+\answer{d'hydrogène}{d'hydrogène|d’hydrogène}{type=atext}
 \answer{Q=mcdelta theta}{1;Q = m·Ceau·ΔΘ,Q = m·Lv}{type=menu}{option=shuffle}
 \answer{Qdeltatheta}{\Qdeltatheta*0.9 , \Qdeltatheta*1.1}{type=range}
 \answer{Q'deltatheta}{-\Qdeltatheta*1.1 , -\Qdeltatheta*0.9}{type=range}
