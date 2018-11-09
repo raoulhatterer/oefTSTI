@@ -275,7 +275,7 @@ L'erreur produite lors de la détermination est énorme \pourcentage %.Conclusio
 \answer{l'énergie}{l'énergie|l’énergie}{type=atext }{option=noaccent}
 \answer{1kg}{un kilogramme|1kg|1 kg}{type=atext}
 \answer{d’état physique}{d’état physique|d'état physique |d’état|d'état}{type=atext }{option=noaccent}
-\answer{vapeur d’eau}{vapeur d’eau}{type=atext}
+\answer{vapeur d’eau}{vapeur d'eau|vapeur d’eau}{type=atext}
 \answer{méthane}{1;méthane,éthane,propane,butane}{type=menu}{option=shuffle}
 \answer{CH4}{CH4}{type=chembrut}
 \answer{dioxygène}{dioxygène}{type=atext}
