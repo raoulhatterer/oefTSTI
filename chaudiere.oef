@@ -295,7 +295,7 @@ L'erreur produite lors de la détermination est énorme \pourcentage %.Conclusio
 \answer{masse de vapeur d'eau}{masse de vapeur d'eau|masse de vapeur d’eau|la masse d'eau|la masse d’eau}{type=atext}
 \answer{liquéfiée}{liquéfiée | condensée}{type=atext}
 \answer{intermoléculaire}{1;intermoléculaire,intramoléculaire}{type=menu}{option=shuffle}
-\answer{deux molécules différentes}{1;deux molécules différentes, la même molécule}{type=menu}{option=shuffle}
+\answer{deux molécules différentes}{1;deux molécules d'eau différentes, la même molécule d'eau}{type=menu}{option=shuffle}
 \answer{d'hydrogène}{d'hydrogène|d’hydrogène}{type=atext}
 \answer{Q=mcdelta theta}{1;Q = m·Ceau·ΔΘ,Q = m·Lv}{type=menu}{option=shuffle}
 \answer{Qdeltatheta}{\Qdeltatheta*0.9 , \Qdeltatheta*1.1}{type=range}
